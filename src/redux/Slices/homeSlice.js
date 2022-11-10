@@ -5,6 +5,25 @@ export const fetchPosts = createAsyncThunk('home/fetchPosts', async () => {
   return await response.json();
 });
 
+export const createPost = createAsyncThunk('home/createPost', async values => {
+  try {
+    const response = await fetch(
+      'https://fake-tweets-api.herokuapp.com/posts',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      },
+    );
+    console.log(response);
+    return await response.json();
+  } catch (error) {
+    console.log('123');
+  }
+});
+
 export const fetchPost = createAsyncThunk('home/fetchPost', async id => {
   const response = await fetch(
     `https://fake-tweets-api.herokuapp.com/posts/${id}`,

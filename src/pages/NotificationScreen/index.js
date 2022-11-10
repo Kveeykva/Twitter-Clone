@@ -13,6 +13,7 @@ import SecondRoute from './secondRoute';
 import ProfilePicture from '../../components/ProfilePicture';
 import Entypo from 'react-native-vector-icons/Feather';
 import styles from './styles';
+import CreateTweetModal from '../../modal/createTweet';
 
 function NotificationScreen({navigation}) {
   const layout = useWindowDimensions();
@@ -77,6 +78,7 @@ function NotificationScreen({navigation}) {
         onIndexChange={setIndex}
         initialLayout={{width: layout.width}}
       />
+      <CreateTweetModal />
     </>
   );
 }

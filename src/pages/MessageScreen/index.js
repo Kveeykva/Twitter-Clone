@@ -15,47 +15,15 @@ import {useSelector} from 'react-redux';
 import {selectHome} from '../../redux/Slices/homeSlice';
 
 const MessageScreen = ({navigation}) => {
-  const [filteredData, setFilteredData] = useState([]);
-  const [masterData, setMasterData] = useState([]);
-
   const home = useSelector(selectHome);
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // const fetchPosts = () => {
-  //   fetch('https://jsonplaceholder.typicode.com/posts')
-  //     .then(response => response.json())
-  //     .then(responseJson => {
-  //       setFilteredData(responseJson);
-  //       setMasterData(responseJson);
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //     });
-  // };
-
-  // const searchFilterFunction = text => {
-  //   if (text) {
-  //     const newData = masterData.filter(item => {
-  //       const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
-  //       const textData = text.toUpperCase();
-  //       return itemData.indexOf(textData) > -1;
-  //     });
-  //     setFilteredData(newData);
-  //     setSearch(text);
-  //   } else {
-  //     setFilteredData(masterData);
-  //     setSearch(text);
-  //   }
-  // };
 
   const src = text => {
     setInputValue(text);
-    console.log(inputValue, 'a');
   };
 
   const MessageView = ({item}) => {
@@ -79,6 +47,35 @@ const MessageScreen = ({navigation}) => {
     );
   };
 
+  const x = y => {
+    return y.messages.filter(item =>
+      item.nickname.toLowerCase().includes(inputValue.toLowerCase()),
+    );
+  };
+
+  const renderPage = () => {
+    if (inputValue.length <= 0) {
+      return (
+        <View>
+          <FlatList
+            data={home.messages}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={MessageView}
+          />
+        </View>
+      );
+    }
+    return (
+      <View>
+        <FlatList
+          data={x(home)}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={MessageView}
+        />
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -93,16 +90,7 @@ const MessageScreen = ({navigation}) => {
         />
         <Icon name="settings" style={styles.settingsIcon} />
       </View>
-
-      {inputValue &&
-        home.messages
-          .filter(item => item.toLowerCase().includes(inputValue.toLowerCase()))
-          .map(x => <MessageView item={x} />)}
-      <FlatList
-        data={home.messages}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={MessageView}
-      />
+      {renderPage()}
     </View>
   );
 };

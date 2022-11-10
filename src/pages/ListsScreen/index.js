@@ -5,7 +5,7 @@ const ListScreen = () => {
   return (
     <SafeAreaView>
       <View>
-        <Text> List List </Text>
+        <Text> List </Text>
       </View>
     </SafeAreaView>
   );

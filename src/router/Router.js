@@ -6,7 +6,7 @@ import HomeScreen from '../pages/HomeScreen';
 import MessageScreen from '../pages/MessageScreen';
 import NotificationScreen from '../pages/NotificationScreen';
 import SearchScreen from '../pages/SearchScreen';
-import SpacesScreen from '../pages/SpacesScreen';
+// import SpacesScreen from '../pages/SpacesScreen';
 import ProfileScreen from '../pages/ProfileScreen';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {DrawerContent} from '../drawerContent';
@@ -80,6 +80,8 @@ function HomeTabs() {
       initialRouteName="Search">
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
+      {/* <Tab.Screen name="Spaces" component={SpacesScreen} /> */}
+
       <Tab.Screen name="Notification" component={NotificationScreen} />
       <Tab.Screen name="Message" component={MessageScreen} />
     </Tab.Navigator>
