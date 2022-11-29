@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   rightSide: {
     flex: 1,
-    paddingLeft: 10,
+    marginLeft: 10,
   },
   profilePicture: {
     width: 48,
@@ -38,12 +38,7 @@ const styles = StyleSheet.create({
   },
   userView: {
     flexDirection: 'row',
-  },
-  threeDot: {
-    fontSize: 12,
-    color: (83, 100, 113),
-    paddingRight: 10,
-    marginLeft: 'auto',
+    alignItems: 'center',
   },
 
   commentIcon: {

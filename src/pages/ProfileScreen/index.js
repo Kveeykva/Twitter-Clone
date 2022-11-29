@@ -1,11 +1,12 @@
 import React from 'react';
 import {View, Text, SafeAreaView} from 'react-native';
+import ThreeDot from '../../modal/threeDot';
 
 const ProfileScreen = () => {
   return (
     <SafeAreaView>
       <View>
-        <Text> Profile Screen </Text>
+        <ThreeDot />
       </View>
     </SafeAreaView>
   );

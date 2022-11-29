@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, Image, Text, Pressable} from 'react-native';
+import {View, Image, Text, Pressable, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import PostIcons from '../PostIcons';
+import ThreeDot from '../../modal/threeDot';
 
 const PostBox = ({
   image,
@@ -34,8 +35,9 @@ const PostBox = ({
           <View style={styles.userView}>
             <Text style={styles.user}>{author}</Text>
             <Text style={styles.userName}>{'@' + author}</Text>
-            <Entypo name="dots-three-vertical" style={styles.threeDot} />
+            <ThreeDot style={styles.threeDot} />
           </View>
+
           <View style={styles.commentIcon}>
             <Text style={styles.message}>{message}</Text>
           </View>

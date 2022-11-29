@@ -70,6 +70,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 10,
   },
+  textInputView: {
+    height: 200,
+    borderRadius: 25,
+  },
+  textInput: {
+    width: '80%',
+    marginLeft: 30,
+  },
 });
 
 export default styles;

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, FlatList, RefreshControl, Animated} from 'react-native';
+import {SafeAreaView, FlatList, RefreshControl} from 'react-native';
 import styles from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchPosts, selectHome} from '../../redux/Slices/homeSlice';
@@ -57,6 +57,7 @@ const HomeScreen = () => {
           );
         }}
       />
+
       <CreateTweetModal />
     </SafeAreaView>
   );

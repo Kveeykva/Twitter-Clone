@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   Modal,
   Text,
@@ -15,7 +15,7 @@ import {Formik} from 'formik';
 import {useDispatch} from 'react-redux';
 import {createPost} from '../../redux/Slices/homeSlice';
 
-const NewTweetModal = () => {
+const NewTweetModal = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
 
@@ -40,7 +40,9 @@ const NewTweetModal = () => {
                 </Pressable>
               </View>
               <View style={styles.profileLine}>
-                <ProfilePicture onPressEvent={() => console.warn('Profile')} />
+                <Pressable onPress={() => navigation.navigate('Search')}>
+                  <ProfilePicture />
+                </Pressable>
                 <View style={styles.targetView}>
                   <Text style={styles.targetText}>Herkese Açık</Text>
                 </View>
@@ -49,6 +51,9 @@ const NewTweetModal = () => {
                 <TextInput
                   style={styles.textInput}
                   placeholder="Neler oluyor?"
+                  maxLength={280}
+                  multiline={true}
+                  keyboardType="default"
                   onChangeText={handleChange('message')}
                   value={values.message}
                 />

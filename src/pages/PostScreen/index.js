@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {View, Image, Text, ActivityIndicator} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Image, Text, ActivityIndicator, Button} from 'react-native';
 import styles from './styles';
 import Entypo from 'react-native-vector-icons/Entypo';
 import PostIcons from '../../components/PostIcons';
@@ -9,6 +9,8 @@ import PostBox from '../../components/PostBox';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const PostScreen = ({route}) => {
+  const [show, setShow] = useState(true);
+
   const {id, author, message, image} = route.params;
   const dispatch = useDispatch();
   const home = useSelector(selectHome);
@@ -26,10 +28,10 @@ const PostScreen = ({route}) => {
           <View style={styles.rightSide}>
             <View style={styles.userView}>
               <Text style={styles.user}>{author}</Text>
+
               <Text style={styles.userName}>{'@' + author}</Text>
             </View>
           </View>
-          <Entypo name="dots-three-vertical" style={styles.threeDot} />
         </View>
         <Text style={styles.message}>{message}</Text>
         {image && <Image source={{uri: image}} style={styles.postImage} />}
@@ -41,7 +43,7 @@ const PostScreen = ({route}) => {
           <ActivityIndicator size="small" color="#1C96E9" />
         )}
 
-        {home.post.comments?.map(item => {
+        {home.post.comments?.map((item, index) => {
           return (
             <PostBox
               image={item.image}
@@ -49,6 +51,7 @@ const PostScreen = ({route}) => {
               author={item.author}
               message={item.message}
               id={item.id}
+              key={index}
             />
           );
         })}

@@ -17,13 +17,38 @@ import TwitterCircleScreen from '../pages/TwitterCircleScrreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PostScreen from '../pages/PostScreen';
 import InsideSearchScreen from '../pages/InsideSearchScreen';
+import {CardStyleInterpolators} from '@react-navigation/stack';
+import LoginScreen from '../auth/login';
+import RegisterScreen from '../auth/register';
 
 const Stack = createNativeStackNavigator();
+
+const config = {
+  animation: 'spring',
+  config: {
+    stiffness: 1000,
+    damping: 500,
+    mass: 3,
+    overshootClamping: true,
+    restDisplacementThreshold: 0.01,
+    restSpeedThreshold: 0.01,
+  },
+};
 
 export default function Router() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        initialRouteName="Login"
+        screenOptions={{
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          transitionSpec: {
+            open: config,
+            close: config,
+          },
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}>
         <Stack.Screen
           name="DrawerTabs"
           component={MyDrawer}
@@ -44,6 +69,16 @@ export default function Router() {
           component={InsideSearchScreen}
           options={{title: 'Popüler gündem'}}
         />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -57,7 +92,6 @@ function HomeTabs() {
       screenOptions={({route}) => ({
         tabBarIcon: ({focused}) => {
           let iconName;
-
           if (route.name === 'Home') {
             iconName = focused ? 'ios-home' : 'ios-home-outline';
           } else if (route.name === 'Search') {
@@ -77,7 +111,7 @@ function HomeTabs() {
         headerShown: false,
         tabBarShowLabel: false,
       })}
-      initialRouteName="Search">
+      initialRouteName="Home">
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="Spaces" component={SpacesScreen} />
