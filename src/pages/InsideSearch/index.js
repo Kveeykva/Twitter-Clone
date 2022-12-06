@@ -3,7 +3,7 @@ import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-const data = require('../SearchScreen/discover.json');
+const data = require('../Search/discover.json');
 
 const wait = timeout => {
   return new Promise(resolve => setTimeout(resolve, timeout));
