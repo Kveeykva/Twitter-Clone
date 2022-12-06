@@ -1,15 +1,55 @@
-import React, {useState} from 'react';
-import {View, Text, SafeAreaView, TextInput} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TextInput,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import styles from './styles';
+import {useNavigation} from '@react-navigation/native';
 import {Formik} from 'formik';
+import * as yup from 'yup';
+import {showMessage} from 'react-native-flash-message';
+import authErrorMessageParser from '../utils/authErrorMessageParser';
+import auth from '@react-native-firebase/auth';
 
-const LoginScreen = ({navigation}) => {
-  const [text, setText] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+const loginValidationSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Geçersiz E-Mail Adresi')
+    .required('E-Mail Adresi Gerekli'),
+  password: yup
+    .string()
+    .min(6, ({min}) => `Şifreniz en az ${min} karakter olmalıdır.`)
+    .required('Şifre Gerekli')
+    .matches(/(?=.*[0-9])/, 'Şifreniz en az bir rakam içermelidir.'),
+});
+const LoginScreen = () => {
+  const [visible, setVisible] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    navigation.navigate('Home');
+  const navigation = useNavigation();
+
+  const handleLogin = values => {
+    auth()
+      .signInWithEmailAndPassword(values.email, values.password)
+      .then(() => {
+        showMessage({
+          message: 'Giriş Başarılı',
+          type: 'success',
+        });
+        navigation.navigate('DrawerTabs');
+      })
+      .catch(error => {
+        showMessage({
+          message: authErrorMessageParser(error.code),
+          type: 'danger',
+        });
+        setLoading(false);
+      });
   };
 
   return (
@@ -31,21 +71,68 @@ const LoginScreen = ({navigation}) => {
         </View>
         <View>
           <Text style={styles.loginText}>veya</Text>
-          <Formik>
-            <TextInput
-              style={styles.input}
-              onChangeText={setText}
-              value={text}
-              placeholder="Telefon, e-posta veya kullanıcı adı"
-              placeholderTextColor={'grey'}
-            />
+          <Formik
+            initialValues={{
+              email: '',
+              password: '',
+            }}
+            validationSchema={loginValidationSchema}
+            validateOnMount={true}
+            onSubmit={handleLogin}>
+            {({handleChange, handleSubmit, values, isValid, errors}) => (
+              <View>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={handleChange('email')}
+                  value={values.email}
+                  placeholder="Telefon, e-posta veya kullanıcı adı"
+                  placeholderTextColor={'grey'}
+                />
+
+                {errors.email && (
+                  <Text style={styles.errorText}>{errors.email}</Text>
+                )}
+                <View style={styles.passwordInput}>
+                  <View>
+                    <TextInput
+                      label="Password"
+                      style={styles.input}
+                      onChangeText={handleChange('password')}
+                      value={values.password}
+                      placeholder="Şifre"
+                      placeholderTextColor={'grey'}
+                      secureTextEntry={visible}
+                    />
+                    {errors.password && (
+                      <Text style={styles.errorText}>{errors.password}</Text>
+                    )}
+                  </View>
+                  <TouchableOpacity
+                    style={styles.eye}
+                    onPress={() => setVisible(!visible)}>
+                    <AntDesign
+                      name={visible ? 'eye' : 'eyeo'}
+                      size={18}
+                      color="grey"
+                    />
+                  </TouchableOpacity>
+                </View>
+                <Pressable
+                  rounded
+                  disabled={!isValid}
+                  onPress={handleSubmit}
+                  loading={loading}
+                  style={[
+                    styles.signInButton,
+                    {backgroundColor: isValid ? '#00acee' : 'white'},
+                  ]}>
+                  <Text style={styles.googleSignIn}>İleri</Text>
+                </Pressable>
+              </View>
+            )}
           </Formik>
         </View>
-        <View style={styles.googleSignInBox}>
-          <Text onPress={handleLogin} style={styles.googleSignIn}>
-            İleri
-          </Text>
-        </View>
+
         <View style={styles.forgetPasswordBox}>
           <Text style={styles.forgetPassword}>Şifreni mi unuttun?</Text>
         </View>

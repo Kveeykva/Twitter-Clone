@@ -3,6 +3,8 @@ import {View, SafeAreaView, Pressable} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Avatar, Drawer, Title, Caption, Text, Switch} from 'react-native-paper';
 import styles from './styles';
+import auth from '@react-native-firebase/auth';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 export function DrawerContent(props) {
   const {navigation} = props;
@@ -43,6 +45,22 @@ export function DrawerContent(props) {
               label="Twitter Circle"
               onPress={() => {
                 navigation.navigate('TwitterCircle');
+              }}
+            />
+            <DrawerItem
+              label="Logout"
+              style={{right: 30}}
+              icon={() => {
+                return (
+                  <SimpleLineIcons
+                    name="logout"
+                    size={20}
+                    style={{left: '90%', position: 'absolute'}}
+                  />
+                );
+              }}
+              onPress={() => {
+                auth().signOut();
               }}
             />
           </Drawer.Section>

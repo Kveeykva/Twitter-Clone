@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   input: {
-    height: 50,
+    height: 45,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: 'grey',
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     textDecorationLine: 'none',
     color: 'grey',
+    backgroundColor: 'white',
   },
   forgetPasswordBox: {
     backgroundColor: 'black',
@@ -78,6 +79,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 20,
     width: '80%',
+  },
+  eye: {
+    position: 'absolute',
+    right: 10,
+    top: 35,
+  },
+  passwordInput: {
+    flexDirection: 'row',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginLeft: 10,
+  },
+  signInButton: {
+    height: 40,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    flexDirection: 'row',
   },
 });
 

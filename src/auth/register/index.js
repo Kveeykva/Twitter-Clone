@@ -23,7 +23,11 @@ const RegisterScreen = ({navigation}) => {
         </View>
         <Text style={styles.loginText}>veya</Text>
         <View style={styles.googleSignInBox}>
-          <Text style={styles.registerText}>
+          <Text
+            onPress={() => {
+              navigation.navigate('RegisterTwitter');
+            }}
+            style={styles.registerText}>
             Telefon veya e-posta ile kaydol
           </Text>
         </View>
